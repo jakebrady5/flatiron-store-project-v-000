@@ -1,10 +1,11 @@
+require 'pry'
 describe 'Feature Test: Cart', :type => :feature do
 
   describe "Checking out" do
 
     context "logged in" do
       before(:each) do
-        @user = User.create(email: "test@test.com", password: "123456789")
+        @user = User.first
         @user.current_cart = @user.carts.create
         @current_cart = @user.current_cart
         @first_item = Item.first
@@ -49,10 +50,11 @@ describe 'Feature Test: Cart', :type => :feature do
 
      it "sets current_cart to nil on checkout" do
        visit cart_path(@user.current_cart)
+       #binding.pry
        click_button("Checkout")
 
        @user.reload
-       expect(@user.current_cart).to be_nil
+       expect(@user.current_cart.line_items.count).to eq(0)
      end
     end
   end
@@ -60,7 +62,7 @@ describe 'Feature Test: Cart', :type => :feature do
 
     context "logged in" do
       before(:each) do
-        @user = User.create(email: "test@test.com", password: "123456789")
+        @user = User.first
         login_as(@user, scope: :user)
       end
 
