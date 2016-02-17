@@ -53,7 +53,7 @@ describe 'Feature Test: Store', :type => :feature do
 
         it 'has a sign in link' do
           visit store_path
-          expect(page).to have_link("sign in")
+          expect(page).to have_link("Sign in")
         end
 
         it 'has a sign up link' do
@@ -65,7 +65,7 @@ describe 'Feature Test: Store', :type => :feature do
 
       context "logged in" do
         before(:each) do
-          @user = User.first
+          @user = User.create(email: "test@test.com", password: "123456789")
           login_as(@user, scope: :user)
         end
 
@@ -83,7 +83,7 @@ describe 'Feature Test: Store', :type => :feature do
           visit store_path
           click_link("Sign out")
           expect(page.current_path).to eq(store_path)
-          expect(page).to have_link("sign in")
+          expect(page).to have_link("Sign in")
         end
       end
 
