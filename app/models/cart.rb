@@ -39,7 +39,7 @@ class Cart < ActiveRecord::Base
       liner = LineItem.find_by(cart_id: self.id, item_id: item_id)
       liner.quantity += 1
     else
-      liner = LineItem.new(cart_id: self.id, item_id: item_id, quantity: 1)
+      liner = LineItem.create(cart_id: self.id, item_id: item_id, quantity: 1)
     end
     liner
   end

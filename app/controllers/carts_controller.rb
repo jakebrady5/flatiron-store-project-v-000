@@ -2,11 +2,8 @@ require 'pry'
 class CartsController < ApplicationController
 
 
-  def index
-    @carts = current_user.carts
-  end
-
   def show
+    binding.pry
     set_cart
   end
 
@@ -18,9 +15,5 @@ class CartsController < ApplicationController
     redirect_to cart_path(@cart)
   end
 
-  private
 
-    def set_cart
-      @current_cart = current_user.current_cart
-    end
 end
