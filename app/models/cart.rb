@@ -26,10 +26,12 @@ class Cart < ActiveRecord::Base
 
 
   def total
-    items = self.items
+    line_items = self.line_items
     total = 0
-    items.each do |item|
-      total += item.price
+    line_items.each do |line_item|
+      line_item.quantity.times do
+        total += line_item.item.price
+      end
     end
     total
   end
@@ -39,7 +41,7 @@ class Cart < ActiveRecord::Base
       liner = LineItem.find_by(cart_id: self.id, item_id: item_id)
       liner.quantity += 1
     else
-      liner = LineItem.create(cart_id: self.id, item_id: item_id, quantity: 1)
+      liner = LineItem.new(cart_id: self.id, item_id: item_id, quantity: 1)
     end
     liner
   end
